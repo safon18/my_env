@@ -1,7 +1,7 @@
-﻿import socket
+import socket
 import socks
 import requests
-
+#comment
 socks.setdefaultproxy(socks.PROXY_TYPE_HTTP, '176.221.104.2', port=35215)
 socket.socket = socks.socksocket
 
