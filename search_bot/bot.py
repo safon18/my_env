@@ -1,7 +1,7 @@
 import socket
 import socks
 import requests
-#comment
+
 socks.setdefaultproxy(socks.PROXY_TYPE_HTTP, '176.221.104.2', port=35215)
 socket.socket = socks.socksocket
 
@@ -67,29 +67,23 @@ def main():
 
 
     while True:
-        search_bot.get_updates(new_offset)
+        if len(search_bot.get_updates()) != 0:
+          search_bot.get_updates(new_offset)
 
-        last_update = search_bot.get_last_update()
+          last_update = search_bot.get_last_update()
 
-        last_update_id = last_update['update_id']
-        last_chat_text = last_update['message']['text']
-        last_chat_id = last_update['message']['chat']['id']
-        last_chat_name = last_update['message']['chat']['first_name']
+          last_update_id = last_update['update_id']
+          last_chat_text = last_update['message']['text']
+          last_chat_id = last_update['message']['chat']['id']
+          last_chat_name = last_update['message']['chat']['first_name']
 
-        result_message=google_search.generate_result_message(last_chat_text)
-        search_bot.send_message(last_chat_id, 'Результаты поиска по Google: ' + result_message)
+          result_message=google_search.generate_result_message(last_chat_text)
+          search_bot.send_message(last_chat_id, 'Результаты поиска по Google: ' + result_message)
 
-        new_offset = last_update_id + 1
+          new_offset = last_update_id + 1
 
 if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
         exit()
-
-
-
-
-
-
-
