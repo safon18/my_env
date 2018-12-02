@@ -10,6 +10,8 @@ token = '738099463:AAHjUgagLdzp5R-6eZapoC8GhNA-oh1DM3U' #Telegram @g18_search_bo
 key = 'AIzaSyD44YDNQGAdGbqOjZ1CrnKYEUMQ5Wct6ns' #Google
 key2 = 'AIzaSyASVG3FkdlnbSoEgASpeRemHeiBYdbnSv0'
 custom_search='013695167246701378175:arrmuifq5-o'
+custom_search2='013695167246701378175:awsr_yvt64y'
+
 
 class Google_Search:
     def __init__(self,key,custom_search):
@@ -24,11 +26,15 @@ class Google_Search:
 
     def generate_result_message(self, search):
         r = self.get_search_results(search)
+
         i = 0
         message = ''
-        while i < 10:
+        if len(r) != 0:
+          while i < 5:
             message += '\n' + str(r['items'][i]['title']) + '\n' + str(r['items'][i]['link']) + '\n'
             i += 1
+        else:
+          message +='Ошибка: ответ от Google пуст. Скорее всего, израсходован лимит запросов.'
         return message
 
 class BotHandler:
@@ -60,7 +66,7 @@ class BotHandler:
         return last_update
 
 search_bot=BotHandler(token)
-google_search=Google_Search(key,custom_search)
+google_search=Google_Search(key2,custom_search2)
 
 def main():
     new_offset = None
