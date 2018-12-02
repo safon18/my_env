@@ -8,6 +8,7 @@ socket.socket = socks.socksocket
 
 token = '738099463:AAHjUgagLdzp5R-6eZapoC8GhNA-oh1DM3U' #Telegram @g18_search_bot
 key = 'AIzaSyD44YDNQGAdGbqOjZ1CrnKYEUMQ5Wct6ns' #Google
+key2 = 'AIzaSyASVG3FkdlnbSoEgASpeRemHeiBYdbnSv0'
 custom_search='013695167246701378175:arrmuifq5-o'
 
 class Google_Search:
@@ -59,7 +60,7 @@ class BotHandler:
         return last_update
 
 search_bot=BotHandler(token)
-google_search=Google_Search(key,custom_search)
+google_search=Google_Search(key2,custom_search)
 
 def main():
     new_offset = None
