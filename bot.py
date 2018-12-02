@@ -1,8 +1,9 @@
 import socket
 import socks
 import requests
+import time
 
-socks.setdefaultproxy(socks.PROXY_TYPE_HTTP, '176.221.104.2', port=35215)
+socks.setdefaultproxy(socks.PROXY_TYPE_HTTP, '69.65.65.178', port=38359)
 socket.socket = socks.socksocket
 
 token = '738099463:AAHjUgagLdzp5R-6eZapoC8GhNA-oh1DM3U' #Telegram @g18_search_bot
@@ -35,7 +36,7 @@ class BotHandler:
         self.token = token
         self.api_url = 'https://api.telegram.org/bot{}/'.format(token)
 
-    def get_updates(self, offset=None, timeout=30):
+    def get_updates(self, offset, timeout=30):
         method = str('getUpdates')
         params = {'timeout': timeout, 'offset': offset}
         url = str(self.api_url) + str(method)
@@ -49,13 +50,11 @@ class BotHandler:
         resp = requests.post(self.api_url + method, params)
         return resp
 
-    def get_last_update(self):
-        get_result = self.get_updates()
-
-        if len(get_result) > 0:
-            last_update = get_result[-1]
+    def get_last_update(self,data):
+        if len(data) > 0:
+            last_update = data[0]
         else:
-            last_update = get_result[len(get_result)]
+            last_update = None
 
         return last_update
 
@@ -64,23 +63,28 @@ google_search=Google_Search(key,custom_search)
 
 def main():
     new_offset = None
-
+    last_update_id = None
 
     while True:
-        if len(search_bot.get_updates()) != 0:
-          search_bot.get_updates(new_offset)
+          upd = search_bot.get_updates(new_offset) #получаю обновления: если new_offset=None, то все (мнимум одно)
+          if last_update_id != search_bot.get_last_update(upd)['update_id']: #если последнее отвеченное и есть это одно, то ничего не делаем
+            last_update = search_bot.get_last_update(upd) #получаю из пачки обновдений только первое, которое пришло
+            last_update_id = last_update['update_id']
+            last_chat_text = last_update['message']['text']
+            last_chat_id = last_update['message']['chat']['id']
+            last_chat_name = last_update['message']['chat']['first_name']
 
-          last_update = search_bot.get_last_update()
+            search_bot.get_updates(last_update) #помечаю отступом что прочитал сообщение
 
-          last_update_id = last_update['update_id']
-          last_chat_text = last_update['message']['text']
-          last_chat_id = last_update['message']['chat']['id']
-          last_chat_name = last_update['message']['chat']['first_name']
+            result_message=google_search.generate_result_message(last_chat_text)
+            search_bot.send_message(last_chat_id, last_chat_name + ', результаты поиска по Google: ' + result_message)
+            if len(upd)>1:
+              new_offset = last_update_id + 1
+          else:
+            new_offset=None
 
-          result_message=google_search.generate_result_message(last_chat_text)
-          search_bot.send_message(last_chat_id, 'Результаты поиска по Google: ' + result_message)
 
-          new_offset = last_update_id + 1
+
 
 if __name__ == '__main__':
     try:
