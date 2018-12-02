@@ -3,7 +3,7 @@ import socks
 import requests
 import time
 
-socks.setdefaultproxy(socks.PROXY_TYPE_HTTP, '140.227.81.53', port=3128)
+socks.setdefaultproxy(socks.PROXY_TYPE_HTTP, '185.255.46.14', port=	53281)
 socket.socket = socks.socksocket
 
 token = '738099463:AAHjUgagLdzp5R-6eZapoC8GhNA-oh1DM3U' #Telegram @g18_search_bot
