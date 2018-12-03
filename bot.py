@@ -29,7 +29,7 @@ class Google_Search:
 
         i = 0
         message = ''
-        if len(r) >=5:
+        if len(r) > 1:
           while i < 5:
             message += '\n' + str(r['items'][i]['title']) + '\n' + str(r['items'][i]['link']) + '\n'
             i += 1
@@ -66,7 +66,7 @@ class BotHandler:
         return last_update
 
 search_bot=BotHandler(token)
-google_search=Google_Search(key2,custom_search2)
+google_search=Google_Search(key1,custom_search1)
 
 def main():
     new_offset = None
