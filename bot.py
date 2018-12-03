@@ -7,9 +7,9 @@ socks.setdefaultproxy(socks.PROXY_TYPE_HTTP, '81.17.131.59', port=8080)
 socket.socket = socks.socksocket
 
 token = '738099463:AAHjUgagLdzp5R-6eZapoC8GhNA-oh1DM3U' #Telegram @g18_search_bot
-key = 'AIzaSyD44YDNQGAdGbqOjZ1CrnKYEUMQ5Wct6ns' #Google
+key1 = 'AIzaSyD44YDNQGAdGbqOjZ1CrnKYEUMQ5Wct6ns' #Google
 key2 = 'AIzaSyASVG3FkdlnbSoEgASpeRemHeiBYdbnSv0'
-custom_search='013695167246701378175:arrmuifq5-o'
+custom_search1='013695167246701378175:arrmuifq5-o'
 custom_search2='013695167246701378175:awsr_yvt64y'
 
 
