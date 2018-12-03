@@ -66,7 +66,7 @@ class BotHandler:
         return last_update
 
 search_bot=BotHandler(token)
-google_search=Google_Search(key1,custom_search1)
+google_search=Google_Search(key2,custom_search2)
 
 def main():
     new_offset = None
