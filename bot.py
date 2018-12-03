@@ -75,6 +75,7 @@ def main():
     while True:
           upd = search_bot.get_updates(new_offset) #получаю обновления: если new_offset=None, то все (мнимум одно)
           if last_update_id != search_bot.get_last_update(upd)['update_id']: #если последнее отвеченное и есть это одно, то ничего не делаем
+            
             last_update = search_bot.get_last_update(upd) #получаю из пачки обновдений только первое, которое пришло
             last_update_id = last_update['update_id']
             last_chat_text = last_update['message']['text']
@@ -86,7 +87,7 @@ def main():
             result_message=google_search.generate_result_message(last_chat_text)
             search_bot.send_message(last_chat_id, last_chat_name + ', результаты поиска по Google: ' + result_message)
             if len(upd)>1:
-              new_offset = last_update_id + 1
+              new_offset = upd[1]['update_id']
           else:
             if len(upd)>1:
               new_offset = last_update_id + 1
