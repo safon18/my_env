@@ -29,12 +29,12 @@ class Google_Search:
 
         i = 0
         message = ''
-        if len(r) != 0:
+        if len(r) >=:
           while i < 5:
             message += '\n' + str(r['items'][i]['title']) + '\n' + str(r['items'][i]['link']) + '\n'
             i += 1
         else:
-          message +='Ошибка: ответ от Google пуст. Скорее всего, израсходован лимит запросов.'
+          message +='Ошибка: ответ от Google пуст. Либо на запрос не найдено ответов, либо израсходован лимит запросов.'
         return message
 
 class BotHandler:
@@ -92,7 +92,7 @@ def main():
               new_offset = upd[1]['update_id']
           else:
             if len(upd)>1:
-              new_offset = last_update_id + 1
+              new_offset = upd[1]['update_id']
             else:
               new_offset=None
 
