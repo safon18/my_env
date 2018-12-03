@@ -88,7 +88,10 @@ def main():
             if len(upd)>1:
               new_offset = last_update_id + 1
           else:
-            new_offset=None
+            if len(upd)>1:
+              new_offset = last_update_id + 1
+            else:
+              new_offset=None
 
 
 
