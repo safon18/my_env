@@ -3,7 +3,7 @@ import socks
 import requests
 import time
 
-socks.setdefaultproxy(socks.PROXY_TYPE_HTTP, '94.130.126.72', port=8080)
+socks.setdefaultproxy(socks.PROXY_TYPE_HTTP, '139.59.151.37', port=8118)
 socket.socket = socks.socksocket
 
 token = '738099463:AAHjUgagLdzp5R-6eZapoC8GhNA-oh1DM3U' #Telegram @g18_search_bot
@@ -81,11 +81,12 @@ def main():
             last_chat_name = last_update['message']['chat']['first_name']
             search_bot.get_updates(last_update) #помечаю отступом что прочитал сообщение
 
-            if last_update['message']['text'] != None:
+            if 'text' in str(last_update):
               last_chat_text = last_update['message']['text']
               result_message=google_search.generate_result_message(last_chat_text)
             else:
               result_message='Ошибка: нет текста'
+
             search_bot.send_message(last_chat_id, last_chat_name + ', результаты поиска по Google: ' + result_message)
             if len(upd)>1:
               new_offset = upd[1]['update_id']
