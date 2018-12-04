@@ -3,7 +3,7 @@ import socks
 import requests
 import time
 
-socks.setdefaultproxy(socks.PROXY_TYPE_HTTP, '81.17.131.59', port=8080)
+socks.setdefaultproxy(socks.PROXY_TYPE_HTTP, '190.122.14.14', port=4444)
 socket.socket = socks.socksocket
 
 token = '738099463:AAHjUgagLdzp5R-6eZapoC8GhNA-oh1DM3U' #Telegram @g18_search_bot
@@ -29,7 +29,7 @@ class Google_Search:
 
         i = 0
         message = ''
-        if len(r) > 1:
+        if len(r['items']) > 1:
           while i < 5:
             message += '\n' + str(r['items'][i]['title']) + '\n' + str(r['items'][i]['link']) + '\n'
             i += 1
@@ -75,26 +75,28 @@ def main():
     while True:
           upd = search_bot.get_updates(new_offset) #получаю обновления: если new_offset=None, то все (мнимум одно)
           if last_update_id != search_bot.get_last_update(upd)['update_id']: #если последнее отвеченное и есть это одно, то ничего не делаем
-            last_update = search_bot.get_last_update(upd) #получаю из пачки обновдений только первое, которое пришло
-            last_update_id = last_update['update_id']
-            last_chat_id = last_update['message']['chat']['id']
-            last_chat_name = last_update['message']['chat']['first_name']
-            search_bot.get_updates(last_update) #помечаю отступом что прочитал сообщение
+              last_update = search_bot.get_last_update(upd) #получаю из пачки обновдений только первое, которое пришло
+              last_update_id = last_update['update_id']
+              last_chat_id = last_update['message']['chat']['id']
+              last_chat_name = last_update['message']['chat']['first_name']
+              search_bot.get_updates(last_update) #помечаю отступом что прочитал сообщение
 
-            if 'text' in str(last_update):
-              last_chat_text = last_update['message']['text']
-              result_message=google_search.generate_result_message(last_chat_text)
-            else:
-              result_message='Ошибка: нет текста'
+              if 'text' in str(last_update):
+                  last_chat_text = last_update['message']['text']
+                  result_message=google_search.generate_result_message(last_chat_text)
+              else:
+                  result_message='Ошибка: нет текста'
 
-            search_bot.send_message(last_chat_id, last_chat_name + ', результаты поиска по Google: ' + result_message)
-            if len(upd)>1:
-              new_offset = upd[1]['update_id']
+              search_bot.send_message(last_chat_id, last_chat_name + ', результаты поиска по Google: ' + result_message)
+
+              if len(upd)>1:
+                  new_offset = upd[1]['update_id']
+
           else:
-            if len(upd)>1:
-              new_offset = upd[1]['update_id']
-            else:
-              new_offset=None
+              if len(upd)>1:
+                  new_offset = upd[1]['update_id']
+              else:
+                  new_offset=None
 
 
 
