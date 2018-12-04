@@ -29,7 +29,8 @@ class Google_Search:
 
         i = 0
         message = ''
-        if len(r['items']) > 1:
+        if 'items' in r and len(r['items']) > 1:
+          #print(len(r['items']))
           while i < 5:
             message += '\n' + str(r['items'][i]['title']) + '\n' + str(r['items'][i]['link']) + '\n'
             i += 1
